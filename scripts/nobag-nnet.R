@@ -4,6 +4,7 @@ library(mlr3learners)
 library(future)
 library(foreach)
 library(doFuture)
+library(glue)
 
 source("R/generate_data.R")
 
@@ -61,7 +62,7 @@ preds <- foreach(i = seq_len(no_runs),
 plan(sequential)
 
 data.frame(run = seq_len(no_runs), pred = preds) |> 
-  saveRDS("data/sims/nobag-nnet.rds")
+  saveRDS(glue("data/sims/nobag-nnet-{n}.rds"))
 
 #  |> 
 #   plot(ylim = c(0, 1), ylab = expression(paste(hat(f), "(x)")))

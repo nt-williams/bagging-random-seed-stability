@@ -10,12 +10,6 @@ i <- Sys.getenv("SLURM_ARRAY_TASK_ID")
 if (i == "undefined" || i == "") i <- 1
 i <- as.integer(i)
 
-args <- commandArgs(trailingOnly = TRUE)
-
-if (length(args) == 0) {
-  args <- list(0.05, 0.01)
-}
-
 # Suppress mlr3 fitting messages
 # lgr::get_logger("mlr3")$set_threshold("warn")
 
@@ -29,13 +23,10 @@ M <- .Machine$integer.max
 # Number of complete models to train
 no_runs <- 1e3
 
-# Number of bags
-epsilon <- as.numeric(args[[1]])
-delta <- as.numeric(args[[2]])
+epsilon <- 0.1
+delta <- 0.1
 rho <- 2/3 # Relative size of the resample
-sigma2 <- 0.1 # Variance guess
-gamma <- 1 / (rho * sqrt(n)) # MSE convergence rate guess
-V <- bags_needed(delta, epsilon, sigma2, n, gamma)
+V <- 320 # Number of bags
 
 # Initial random number generated from Claude Sonnet 4.6 with prompt
 # "Generate a random integer between 1 and 2147483647"
