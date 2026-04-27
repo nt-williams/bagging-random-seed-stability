@@ -3,9 +3,10 @@ library(dplyr)
 library(ife)
 library(glue)
 library(torch)
+library(here)
 
-source("../R/schader-generate_data.R")
-source("../R/ate_aipw_adaptive_crossbag.R")
+source(here("R", "schader-generate_data.R"))
+source(here("R", "ate_aipw_adaptive_crossbag.R"))
 
 i <- Sys.getenv("SLURM_ARRAY_TASK_ID")
 if (i == "undefined" || i == "") i <- 1
@@ -37,7 +38,7 @@ fit_seeds <- sample.int(M, size = no_runs, replace = TRUE)
 # Number of bags
 epsilon <- as.numeric(args[[1]])
 delta <- as.numeric(args[[2]])
-rho <- 1/2 # Relative size of the resample
+rho <- 1 - 1/exp(1) # Relative size of the resample
 V <- 5
 
 learner <- "ranger"
@@ -45,4 +46,4 @@ learner <- "ranger"
 set.seed(fit_seeds[i])
 res <- ate_aipw_adaptive_crossbag(foo, foo1, foo0, learner, rho, epsilon, delta, V)
 
-saveRDS(res, glue("../data/sims/crossbag/adaptive2_aipw_{i}_{n}_{epsilon}_{delta}.rds"))
+saveRDS(res, glue("../data/sims/crossbag/adaptive_aipw_{i}_{n}_{epsilon}_{delta}.rds"))
