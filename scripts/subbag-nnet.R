@@ -2,9 +2,9 @@ library(mlr3)
 library(mlr3pipelines)
 library(mlr3learners)
 library(glue)
+library(here)
 
-source("../R/generate_data.R")
-source("../R/bags_needed.R")
+source(here("R", "generate_data.R"))
 
 i <- Sys.getenv("SLURM_ARRAY_TASK_ID")
 if (i == "undefined" || i == "") i <- 1
@@ -25,7 +25,7 @@ no_runs <- 1e3
 
 epsilon <- 0.1
 delta <- 0.1
-rho <- 2/3 # Relative size of the resample
+rho <- 1 - 1/exp(1) # Relative size of the resample
 V <- 320 # Number of bags
 
 # Initial random number generated from Claude Sonnet 4.6 with prompt
