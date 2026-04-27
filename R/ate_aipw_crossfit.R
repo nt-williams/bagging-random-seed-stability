@@ -22,6 +22,10 @@ ate_aipw_crossfit <- function(data, data1, data0, no_folds, no_seeds, learner) {
   n <- nrow(data)
   folds <- make_folds(n, V = no_folds)
 
+  if (no_folds == 1) {
+    folds[[1]]$training_set <- folds[[1]]$validation_set
+  }
+
   idx <- seq_len(n)
 
   g <- matrix(nrow = n, ncol = 1)
