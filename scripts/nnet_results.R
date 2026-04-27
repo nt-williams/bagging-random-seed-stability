@@ -13,7 +13,7 @@ setDT(res_nobag)
 epsilon <- seq(0.001, 0.7, length.out = 1e4)
 
 bound <- function(epsilon) {
-    2 * exp(-(320 * epsilon^2) / (4 * (1/4) + (1 - 1/exp(1)) * epsilon))
+    2 * exp(-(320 * epsilon^2) / (4 * (1/4) + (2 / 3) * epsilon))
 }
 
 png("plots/nnet-phase.png", width = 3, height = 2.5, units = "in", res = 600)
