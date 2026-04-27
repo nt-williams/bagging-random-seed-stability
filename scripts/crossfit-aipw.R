@@ -4,7 +4,8 @@ library(glue)
 library(origami)
 library(foreach)
 
-source("../R/schader-generate_data.R")
+source(here("R", "schader-generate_data.R"))
+source(here("R", "ate_aipw_crossfit.R"))
 
 i <- Sys.getenv("SLURM_ARRAY_TASK_ID")
 if (i == "undefined" || i == "") i <- 1
